@@ -1,4 +1,4 @@
-# Flippy
+# (╯°□°）╯
 Flippy is a Slackbot that flips tables and text.
 
 ## Commands
