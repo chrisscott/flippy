@@ -40,6 +40,7 @@ type slackResponse struct {
 }
 
 var env envVars
+var flips map[string]string
 
 func main() {
 	// get env vars
@@ -52,6 +53,8 @@ func main() {
 	if env.TriggerWord == "" {
 		env.TriggerWord = "flip"
 	}
+
+	flips = getFlipMap()
 
 	r := mux.NewRouter()
 
@@ -70,7 +73,7 @@ func slackPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	hookRequest := slackRequest{}
 	table := "┻━┻"
-	flips := getFlipMap()
+	var reversed string
 
 	start := time.Now()
 	log.Printf(
@@ -102,18 +105,10 @@ func slackPostHandler(w http.ResponseWriter, r *http.Request) {
 	triggerText := strings.Replace(strings.Trim(hookRequest.Text, " "), env.TriggerWord, "", 1)
 
 	if triggerText != "" {
-		table = ""
-		for _, rune := range triggerText {
-			letter := string(rune)
-			// get matches
-			if flips[letter] != "" {
-				table += flips[letter]
-			} else {
-				table += letter
-			}
-		}
-		table = reverseString(table)
+		reversed = flipText(triggerText)
 	}
+
+	table = reverseString(table + reversed)
 
 	resp := slackResponse{
 		Text: "(╯°□°）╯︵ " + table,
@@ -126,6 +121,21 @@ func slackPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+}
+
+func flipText(input string) string {
+	var flipped string
+	for _, rune := range input {
+		letter := string(rune)
+		// get matches
+		if flips[letter] != "" {
+			flipped += flips[letter]
+		} else {
+			flipped += letter
+		}
+	}
+
+	return flipped
 }
 
 func validateSlackRequest(r *http.Request, hookRequest *slackRequest) error {
