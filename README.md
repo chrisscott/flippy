@@ -21,13 +21,13 @@ Two environment variables need to be set:
 # Commands
 The examples below assume you are using the default trigger word `flip`. If you are using a custom trigger word use that instead.
 
-## Invoke flippy and have a table flip as a response:
+## Invoke Flippy and have a table flip as a response:
 
 `flip`
 
 `(╯°□°）╯︵ ┻━┻`
 
-## Have flippy flip some text instead of a table:
+## Have Flippy flip some text instead of a table:
 
 `flip dood`
 
@@ -37,6 +37,6 @@ The examples below assume you are using the default trigger word `flip`. If you 
 
 * Check all your settings
 * Make sure you are typing the trigger word at the beginning of the line
-* If you are using a custom trigger word be sure you are using that and not `flip`
+* If you are using a custom trigger word be sure you are using that instead of `flip` so summon Flippy
 * If you have restricted the webhook to a single channel make sure you are in that channel
 * Flippy logs to `STDOUT`
